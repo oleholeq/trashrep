@@ -1,0 +1,25 @@
+name: CI-CD-pipe
+env:
+    EB_PACKAGE_S3_BUCKET_NAME: "flask-app-zeroo"
+    EB_APPLICATION_NAME      : "zeroflask"
+    EB_ENVIRONMENT_NAME      : "zeroflask-env"
+    DEPLOY_PACKAGE_NAME      : "flask-app$(( github.sha )).zip"
+    AWS_REGION_NAME          : "eu-central-1"
+    
+
+on:
+    push:
+    branches: 
+          -  master 
+ 
+
+jobs:
+    my-ci-part:
+      runs-on: ubuntu-latest    
+      steps:
+      name: Git clone our repoo
+      uses: action\checkout@v1
+    name: create zip file
+     run: zip -r $(( env.DEPLOY_PACKAGE_NAME )) ./ -x *.git*
+     
+      
